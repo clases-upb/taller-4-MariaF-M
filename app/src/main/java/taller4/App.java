@@ -3,17 +3,36 @@
  */
 package taller4;
 
-
-
 public class App {
     
 
     public static void main(String[] args) {
-        
-        //Coloque los llamados a cada función de acuerdo con cada enunciado
-        //codifique el control de errores para el main
 
+    //Coloque los llamados a cada función de acuerdo con cada enunciado
+    //codifique el control de errores para el main
 
+        try {
+
+            //1.
+            System.out.println(Calcular_nro_enteros(259) + "\n");
+            //2.
+            System.out.println(Sucesión_Fibonacci(3) + "\n");
+            //3.
+            byte lim_inf1 = 20, lim_sup1 = 30, llamado = (byte)(Math.random()*(lim_sup1-lim_inf1)+lim_inf1+1);
+            for(int i=0; i<llamado; i++){
+                System.out.println(Calcular_raiz_cuadrada());
+            }
+            System.out.println("\n");
+            //4.
+            System.out.println(Rango_pares(1, 100) + "\n");
+            //5. 
+            System.out.println(Suma_aleatorios(10) + "\n");
+            //6. 
+            System.out.println(Loteria());
+        } 
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /* TODAS LAS FUNCIONES DEBEN LLEVAR CONTROL DE ERRORES, SI EL ENUNCIADO NO LO ESPECIFICA, LO DEBES PONER
@@ -26,13 +45,69 @@ public class App {
      * 
     */
 
+    public static String Calcular_nro_enteros(int nro){
+
+        if(nro < 100 || nro > 500)
+            return "-1";
+        
+        try {
+
+            int impar = 0, contador = 0;
+            String resultado = "";
+    
+            for (int var = 1; var <= nro; var++) {
+                if (var % 2 != 0) { 
+                    impar++;
+                    
+                    if (contador > 0 && contador % 8 == 0) {
+                        resultado += "\n"; 
+                    }
+    
+                    if (contador > 0) {
+                        resultado += ", "; 
+                    }
+
+                    resultado += var;
+                    contador++;
+                }
+            }
+
+            return resultado;                     
+        } 
+        catch (Exception e) {
+            return "-1";
+        }
+    }
+        
+
     /* 2. 	Escriba una función que reciba un entero N mayor de 2  y retorne un string cono esos N términos de la 
     serie de Fibonacci (La sucesión de Fibonacci se trata de una serie infinita de números naturales que empieza con un 0 y un 1 
     y continúa añadiendo números que son la suma de los dos anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
     987, 1597…)
-     * 
-     * 
     */
+
+    public static String Sucesión_Fibonacci (int N){
+
+        if(N <= 2)
+            return "-1";
+
+        try {
+            int a = 0, b = 1, c = 0;
+            String resultado = a + ", " + b;
+
+            for (int i = 2; i < N; i++){
+                c = a + b;
+                resultado += ", " + c;
+                a = b;
+                b = c;
+            }
+
+            return resultado;
+        } 
+        catch (Exception e) {
+            return "-1";
+        }
+    }
 
     /* 
      * 3.	Diseñar y desarrollar una función que NO reciba datos de entrada, genere aleatoriamente un número entre 2 y 355, 
@@ -43,8 +118,13 @@ public class App {
 
     */
 
+    public static double Calcular_raiz_cuadrada (){
 
-
+            byte lim_inf = 0;
+            short lim_sup = 355;
+            int alea = (int)(Math.random()*(lim_sup-lim_inf)+lim_inf+1);
+            return Math.sqrt(alea);    
+    }
 
     /*4.	Diseñar y desarrollar una función que reciba un valor inicial y un valor final, para generar 900 números aleatorios 
         en este rango y retorne un texto que diga cuántos números pares fueron generados. Controle que el nro inicial sea menor que 
@@ -53,8 +133,27 @@ public class App {
         Llame la función desde el main e imprimir el resultado arrojado.
     */
 
+    public static String Rango_pares(long v_in, long v_fin){
 
+        if(v_fin <= v_in)
+            return "-1";
 
+        try {
+
+            int alea = 0, pares = 0, num_ale = 900;
+ 
+            for(short i=0; i<num_ale; i++){
+                alea = (int)(Math.random()*(v_fin - v_in + 1) + v_in);
+
+                if(alea%2==0)
+                    pares++;
+            }
+            return "El total de números pares es: " + pares;
+        } 
+        catch (Exception e) {
+            return "-1";
+        }
+    }
 
     /* 5.	Diseñar y desarrollar una función que calcule una cantidad de números aleatorios que viene como parámetro de entrada 
         y los sume.  La función deberá retornar el total de la suma. Usted defina los rangos que va a usar en el cálculo.
@@ -63,6 +162,23 @@ public class App {
 
       
     */
+
+    public static int Suma_aleatorios(int cantidad){
+
+        try{
+
+            int suma = 0, min = 1, max = 100, alea = 0;
+
+            for(int i =0; i<cantidad; i++){
+                alea = (int)(Math.random()*(max-min + 1) + min);
+                suma += alea;
+            }
+            return suma;
+        }
+        catch (Exception e) {
+            return -1;
+        }
+    }
 
 
     /* 6.	Se requiere una función para simular el sorteo de una lotería, de acuerdo con las siguientes condiciones:
@@ -105,4 +221,74 @@ public class App {
      * 
     */
 
+    public static String Loteria(){
+
+        try {
+
+            short  n_premiadoalea = 0, n_serie = 0;
+            final short n_sorteo_max1 = 20, n_sorteo_min1 = 6, n_sorteo_max2 = 5, n_sorteo_min2 = 2, 
+            n_premio_alea = 10000, max = 150, min = 100, dos_cifras = 10, tres_cifras = 100, cuatro_cifras = 1000;
+            String n_lot = "", n_premiado = "", resultado = "";
+
+            resultado += "======PREMIOS MENORES=======\n";
+            for(short sorteo = n_sorteo_max1; sorteo >= n_sorteo_min1; sorteo--){
+
+                n_premiadoalea = (short)(Math.random()*n_premio_alea);
+                n_serie = (short)(Math.random()*(max-min + 1)+min);
+
+                if(n_premiadoalea < dos_cifras)
+                    n_premiado = "000" + n_premiadoalea;
+                else if(n_premiadoalea < tres_cifras)
+                    n_premiado = "00" + n_premiadoalea;
+                else if(n_premiadoalea < cuatro_cifras)
+                    n_premiado = "0" + n_premiadoalea;
+                else 
+                    n_premiado = "" + n_premiadoalea;
+
+                n_lot = "Sorteo # " + sorteo + " Número Premiado "+ n_premiado + " - " + "Serie " + n_serie + "\n"; 
+                resultado += n_lot;
+            }
+
+            resultado += "======PREMIOS MENORES=======\n";
+            for(short sorteo = n_sorteo_max2; sorteo >=  n_sorteo_min2; sorteo--){
+
+                n_premiadoalea = (short)(Math.random()*n_premio_alea);
+                n_serie = (short)(Math.random()*(max-min + 1)+min);
+
+                if(n_premiadoalea < dos_cifras)
+                    n_premiado = "000" + n_premiadoalea;
+                else if(n_premiadoalea < tres_cifras)
+                    n_premiado = "00" + n_premiadoalea;
+                else if(n_premiadoalea < cuatro_cifras)
+                    n_premiado = "0" + n_premiadoalea;
+                else 
+                    n_premiado = "" + n_premiadoalea;
+
+                n_lot = "Sorteo # " + sorteo + " Número Premiado "+ n_premiado + " - " + "Serie " + n_serie + "\n"; 
+                resultado += n_lot;
+            }
+
+            resultado += "======PREMIO MAYOR=======\n";
+
+                n_premiadoalea = (short)(Math.random()*n_premio_alea);
+                n_serie = (short)(Math.random()*(max-min + 1)+min);
+
+                if(n_premiadoalea < dos_cifras)
+                    n_premiado = "000" + n_premiadoalea;
+                else if(n_premiadoalea < tres_cifras)
+                    n_premiado = "00" + n_premiadoalea;
+                else if(n_premiadoalea < cuatro_cifras)
+                    n_premiado = "0" + n_premiadoalea;
+                else 
+                    n_premiado = "" + n_premiadoalea;
+
+                n_lot = "Sorteo # 1 Número Premiado "+ n_premiado + " - " + "Serie " + n_serie + "\n"; 
+                resultado += n_lot;
+
+            return resultado;
+        } 
+        catch (Exception e) {
+            return "-1" + e.toString();       
+        }
+    }
 }
